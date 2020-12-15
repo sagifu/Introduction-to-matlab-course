@@ -26,6 +26,18 @@ for set_trial = 1:n_trials
     % if the trial is still smaller than n_back, randomize picture
     if set_trial<=n_back
         trial_order(set_trial) = randi(n_stimuli,1);
+        
+        % ================================================================
+        % Edit - if and while statement - comparison of a stimulus and the
+        % previous one, if the trial is larger than 1 to avoid exceeding
+        % array bounds
+        % ================================================================
+        
+        if set_trial > 1
+            while trial_order(set_trial) == trial_order(set_trial-1)
+                trial_order(set_trial) = randi(n_stimuli,1);
+            end
+        end
         % if the trial is larger than the n_back 
         % check if the trial is the next target
     elseif target_order(count_target_order) == set_trial
@@ -43,7 +55,13 @@ for set_trial = 1:n_trials
         % randomize a picture and make sure (while loop) it isn't the same
         % as the picture from n_back trials before
         trial_order(set_trial) = randi(n_stimuli,1);
-        while trial_order(set_trial) == trial_order(set_trial-n_back)
+        
+        % ================================================================
+        % Edit - 2nd while statement - comparison of a stimulus and the
+        % previous one
+        % ================================================================
+        
+        while trial_order(set_trial) == trial_order(set_trial-n_back) || trial_order(set_trial) == trial_order(set_trial-1)
             trial_order(set_trial) = randi(n_stimuli,1);
         end
     end
